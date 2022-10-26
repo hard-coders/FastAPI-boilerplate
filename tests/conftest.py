@@ -1,7 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 
 from app import main
 from app.config import get_settings
@@ -27,9 +27,17 @@ TestingSessionLocal = sessionmaker(
 
 
 @pytest.fixture(scope="session")
-def app():
+def db() -> Session:
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@pytest.fixture(scope="session")
+def app(db):
     def override_get_db():
-        db = TestingSessionLocal()
         try:
             yield db
         finally:
