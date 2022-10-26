@@ -12,6 +12,22 @@
 
 - pytest
 
+## 사전 작업
+
+### 환경변수 설정
+
+e.g.
+
+```dotenv
+# example .env file
+SECRET_KEY=64c27589c590ada80f0c04a7232581f45b8168defae9e3bdba0d655ceee77ee8
+DB_HOST=db
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=1234
+DB_DATABASE=dev
+```
+
 ## 실행
 
 ```shell
