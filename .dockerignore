@@ -1,0 +1,15 @@
+# python
+__pycache__/
+.pytest_cache/
+tests/
+venv/
+
+# docker
+docker-compose.yml
+Dockerfile
+
+# ide
+.idea/
+
+# etc
+db/

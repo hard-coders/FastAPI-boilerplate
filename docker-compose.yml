@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+    env_file:
+      - .env
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./app:/opt/app
+    networks:
+      - web
+
+  db:
+    build:
+      context: ./db
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-1234}
+      MYSQL_DATABASE: ${DB_DATABASE:-dev}
+      MYSQL_PORT: ${DB_PORT}
+    networks:
+      - web
+
+networks:
+  web:
