@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 
-from app import main
+from app import main, utils, models
 from app.config import get_settings
 from app.db import get_db, Base
 
@@ -55,3 +55,18 @@ def client(app):
     yield TestClient(app)
 
     Base.metadata.drop_all(bind=engine)
+
+
+@pytest.fixture
+def add_user(db):
+    def func(
+        username: str = "test",
+        password: str = "1234",
+    ):
+        user = models.User(username=username, password=utils.create_password_hash(password))
+        db.add(user)
+        db.commit()
+
+        return user
+
+    return func
